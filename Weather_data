@@ -1,0 +1,23 @@
+ABSTRACT: To get the weather data of cities ,taking the help of the API's that maintains the weather data using python
+import requests
+'''THE request module is used to extract or update the data in database '''
+API_KEY="a05c67a35482866b4a412e39955544fd"
+'''We are currently taking the help of an Api from "openweather.org" ,that has weather data of over 2 million 
+countries in the world ,it maintains the data  in the form of JSON files ,The API_KEY  i am using is 
+account specific ,if you create an account in the openweather.org , you will be given a key,throught which you can 
+access the database data'''
+city=input("enter the city name :")
+BASE_URL="https://api.openweathermap.org/data/2.5/weather"
+REQUEST=f"{BASE_URL}?appid={API_KEY}&q={city}"#Query syntax specified by the openwether.org
+ # FOR MORE DETAILS VISIT URL: "openweather.org"
+'''The requsest is a form of Query that request the database '''
+response=requests.get(REQUEST)
+#if the request is successful the status_code is 200,just like how we get an error 402 PAGE NOT FOUND
+if response.status_code==200:
+    data=response.json()
+    weather=data['weather'][0]['description']
+    temp=data['main']['temp']
+    print("Weather"+weather)
+    print("Temparature:"+str(temp-273)+" cel ")
+else:
+    print("city not found")
